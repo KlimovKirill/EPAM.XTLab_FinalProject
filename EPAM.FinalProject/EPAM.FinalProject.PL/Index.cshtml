@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>АвтоФорум</title>
+    <link rel="stylesheet" type="text/css" href="~/styles/indexStyles.css">
+</head>
+<body>
+    
+    <div id="wrapper">
+        <div id="header">
+            <h1 style="text-align: center">АвтоФорум</h1>
+
+
+            @{ if (User.Identity.IsAuthenticated)
+                {
+
+                    if (User.IsInRole("Admin"))
+                    {
+                        <p>Account type: Administrator</p>
+                    }
+                    else
+                    {
+                        <p>Account type: User</p>
+                    }
+                    <p>Username: @User.Identity.Name</p>
+                    <a href="~/pages/Logout">Logout</a>
+                }
+                else
+                {
+                    <a href="~/pages/Login">Вход/Регистрация</a>
+                }
+            }
+        </div>
+
+        <div id="nav">
+            @{ if (User.IsInRole("Admin"))
+                {
+                    <button class="button" id="addTopic">Добавить новую тему</button><br>
+                    <button class="button" id="showAllMessagesInTopic">Просмотр сообщений темы</button><br>
+                    <button class="button" id="editTopic">Редактирование темы</button><br>
+                    <button class="button" id="delTopic">Удаление темы</button><br>
+                    <br />
+                    <button class="button" id="getAllUsers">Список пользователей</button><br>
+                    <button class="button" id="getUserByID">Поиск пользователя по ID</button><br>
+                    <button class="button" id="editUser">Редактировать пользователя</button><br>
+                    <button class="button" id="delUser">Удалить пользователя</button><br>
+                }
+            }
+
+            @{ if (User.IsInRole("User"))
+                {
+                    <button class="button" id="addTopic">Добавить новую тему</button><br>
+                    <button class="button" id="showAllMessagesInTopic">Просмотр сообщений темы</button><br>
+                    <button class="button" id="getAllUsers">Список пользователей</button><br>
+                }
+            }
+        </div>
+
+        <div id="content">
+            Темы:
+
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Название</th>
+                    <th>Дата создания</th>
+                </tr>
+                @{
+
+
+                    var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                    var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                    var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+
+                    foreach (var topic in _topicBLL.ShowAllTopics())
+                    {
+                        <tr>
+                            <td>@topic.ID</td>
+                            <td>@topic.Name</td>
+                            <td>@topic.CreationDate.ToString("dd.MM.yyyy")</td>
+                        </tr>
+                    }
+                }
+
+            </table>
+        </div>
+
+        <div id="footer">Made by xoyolovesneon 2020</div>
+    </div>
+    <script src="~/js/buttons.js"></script>
+</body>
+</html>

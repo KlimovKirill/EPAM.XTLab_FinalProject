@@ -1,0 +1,21 @@
+﻿
+
+#wrapper {
+    width: 1000px;
+    margin: 10px auto;
+    background-color:blueviolet;
+}
+
+#nav {
+    width: 300%;
+    float: left;
+}
+
+#content {
+    width: 700%;
+    float: left;
+}
+
+#header, #content, #nav, #footer {
+    outline: 10px solid red;
+}

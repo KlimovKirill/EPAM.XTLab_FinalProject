@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Удаление темы</title>
+</head>
+<body>
+    <div>
+        <form action="~/pages/DeleteTopic.cshtml" method="post">
+            <label>Введите ID темы, которую хотите удалить:</label>
+            <input type="number" name="tID" value="" />
+
+            <button type="submit">Удалить</button>
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+        @{
+            if (IsPost)
+            {
+                int tID = int.Parse(Request.Params["tID"]);
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                _topicBLL.Delete(tID);
+            }
+
+        }
+    </div>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

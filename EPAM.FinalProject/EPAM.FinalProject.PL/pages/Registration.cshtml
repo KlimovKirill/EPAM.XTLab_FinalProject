@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="~/styles/indexStyles.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1 style="text-align: center">АвтоФорум</h1>
+        </div>
+
+        <div id="content2">
+            <h2>Форма регистрации</h2>
+
+            <form action="~/pages/Registration.cshtml" method="post">
+                <label>Имя:</label>
+                <input type="text" name="name" value="" /><br />
+                <label>Дата рождения:</label>
+                <input type="date" name="bdate" value="" /><br />
+                <label>Логин:</label>
+                <input type="text" name="login" value="" /><br />
+                <label>Пароль:</label>
+                <input type="password" name="pass" value="" /><br />
+                <label>Роль:</label>
+                <input type="text" name="role" value="" /><br />
+                <label>Ссылка на аватарку:</label>
+                <input type="text" name="icon" value="" /><br />
+
+                <button type="submit">Регистрация</button><br />
+                <button type="button" id="homeBtn">Home</button>
+            </form>
+
+            @{
+                if (IsPost)
+                {
+
+                    string name = Request.Params["name"];
+                    DateTime bdate = DateTime.Parse(Request.Params["bdate"]);
+                    string login = Request.Params["login"];
+                    string pass = Request.Params["pass"];
+                    string role = Request.Params["role"];
+                    string icon = Request.Params["icon"];
+
+
+                    var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                    var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                    var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                    var user = new User();
+
+                    user.Name = name;
+                    user.DateOfBirth = bdate;
+                    user.Login = login;
+                    user.Password = pass;
+                    user.Role = role;
+                    user.Icon = icon;
+                    _userBLL.Add(user);
+                }
+
+            }
+        </div>
+
+        <div id="footer">Made by xoyolovesneon 2020</div>
+    </div>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

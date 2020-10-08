@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Редактирование пользователя</title>
+</head>
+<body>
+    <div>
+        <h2>Форма редактирования пользователя</h2>
+        <form action="~/pages/EditUser.cshtml" method="post">
+            <label>Введите ID пользователя, которого хотите отредактировать:</label>
+            <input type="number" name="uID" value="" /><br />
+            <label>Имя:</label>
+            <input type="text" name="name" value="" /><br />
+            <label>Дата рождения:</label>
+            <input type="date" name="bdate" value="" /><br />
+            <label>Логин:</label>
+            <input type="text" name="login" value="" /><br />
+            <label>Пароль:</label>
+            <input type="password" name="pass" value="" /><br />
+            <label>Ссылка на аватарку:</label>
+            <input type="text" name="icon" value="" /><br />
+
+            <button type="submit">Изменить</button><br />
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+        @{
+            if (IsPost)
+            {
+                int uID = int.Parse(Request.Params["uID"]);
+                string name = Request.Params["name"];
+                DateTime bdate = DateTime.Parse(Request.Params["bdate"]);
+                string login = Request.Params["login"];
+                string pass = Request.Params["pass"];
+                string icon = Request.Params["icon"];
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                var oldUser = _userBLL.GetById(uID);
+
+                var user = new User();
+
+                user.ID = uID;
+                user.Name = name;
+                user.DateOfBirth = bdate;
+                user.Login = login;
+                user.Password = pass;
+                user.Role = oldUser.Role;
+                user.Icon = icon;
+
+                _userBLL.Edit(user);
+            }
+
+        }
+    </div>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Поиск темы по ID</title>
+</head>
+<body>
+    <form action="~/pages/GetTopicByID.cshtml" method="post">
+        <label>Введите ID темы, чтобы найти её:</label>
+        <input type="number" name="id" value="" />
+
+        <button type="submit">Submit</button>
+        <button type="button" id="homeBtn">Home</button>
+    </form>
+
+    @{
+        if (IsPost)
+        {
+            int tID = int.Parse(Request.Params["id"]);
+
+            var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+            var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+            var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+            <div>
+                @_topicBLL.GetTopicById(tID).ID @_topicBLL.GetTopicById(tID).Name @_topicBLL.GetTopicById(tID).CreationDate.ToString("dd.MM.yyyy")
+            </div>
+        }
+
+    }
+    <script src="~/js/buttons.js"></script>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

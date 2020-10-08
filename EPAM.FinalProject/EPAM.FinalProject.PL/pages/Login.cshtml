@@ -1,0 +1,31 @@
+﻿@if (IsPost)
+{
+    var user = Request["UserName"];
+    var password = Request["Password"];
+
+    FormsAuthentication.SetAuthCookie(user, createPersistentCookie: true);
+
+    Response.Redirect("~");
+    return;
+}
+
+<link rel="stylesheet" type="text/css" href="~/styles/indexStyles.css">
+
+<div id="wrapper">
+    <div id="header">
+        <h1 style="text-align: center">АвтоФорум</h1>
+    </div>
+
+    <div id="content2">
+        <form action="~/pages/Login.cshtml" method="post">
+            <label for="UserName">Логин:</label>
+            <input type="text" name="UserName" /><br />
+            <label for="Password">Пароль:</label>
+            <input type="password" name="Password" /><br />
+            <button type="submit" style="text-align: center">Вход</button>
+        </form>
+        <button class="button" id="registration">Регистрация</button>
+    </div>
+
+    <div id="footer">Made by xoyolovesneon 2020</div>
+</div>

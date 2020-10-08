@@ -1,0 +1,55 @@
+﻿body, html {
+    margin: 0px;
+    padding: 0px;
+}
+
+table{
+    margin: 0 auto;
+}
+
+form {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#wrapper {
+    width: 100%;
+    margin: 0 auto;
+    position: fixed; /* Фиксированное положение */
+    left: 0;
+    top: 0; /* Левый нижний угол */
+}
+
+#header {
+    color: #fff;
+    background-color: #169211;
+    font-size: 14pt;
+}
+
+#nav {
+    
+    width: 200px;
+    float: left;
+}
+
+#content {
+    
+    margin-left: 202px;
+    text-align: center;
+}
+
+#content2 {
+    
+    text-align: center;
+}
+
+#footer {
+    clear: both;
+    position: fixed; /* Фиксированное положение */
+    left: 0;
+    bottom: 0; /* Левый нижний угол */
+    padding: 10px; /* Поля вокруг текста */
+    background: #39b54a; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    width: 100%; /* Ширина слоя */
+}

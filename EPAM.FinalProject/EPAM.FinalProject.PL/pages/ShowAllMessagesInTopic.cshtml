@@ -1,0 +1,114 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.PL;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Сообщения темы</title>
+</head>
+<body>
+    <div>
+        <form action="~/pages/ShowAllMessagesInTopic.cshtml" method="post">
+            <label>Введите ID темы, сообщения которой Вы хотите посмотреть:</label>
+            <input type="number" name="id" value="" />
+
+            <button type="submit">Submit</button>
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+    </div>
+    @{ if (User.IsInRole("Admin"))
+        {
+
+            if (IsPost)
+            {
+                int topicID = int.Parse(Request.Params["id"]);
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                <p>Хотите добавить новое сообщение в данную тему? Легко!</p>
+                <button type="button" id="addMessage">Добавить новое сообщение</button>
+
+                <button type="button" id="editMessage">Редактировать сообщение</button>
+
+                <button type="button" id="delMessage">Удалить сообщение</button>
+
+                Helper.currentTopicID = topicID;
+
+
+                <p>Сообщения темы "@_topicBLL.GetTopicById(topicID).Name"</p>
+
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Автор</th>
+                        <th>Содержание</th>
+                        <th>Дата создания</th>
+                    </tr>
+
+                    @foreach (var message in _messageBLL.GetAllMessagesInTopic(topicID))
+                    {
+                        <tr>
+                            <td>@message.ID</td>
+                            <td>@message.Author</td>
+                            <td>@message.Text</td>
+                            <td>@message.CreationDate.ToString("dd.MM.yyyy")</td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+
+    }
+
+    @{ if (User.IsInRole("User"))
+        {
+            if (IsPost)
+            {
+                int topicID = int.Parse(Request.Params["id"]);
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                <p>Хотите добавить новое сообщение в данную тему? Легко!</p>
+                <button type="button" id="addMessage">Добавить новое сообщение</button>
+
+                Helper.currentTopicID = topicID;
+
+                <p>Сообщения темы "@_topicBLL.GetTopicById(topicID).Name"</p>
+
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Автор</th>
+                        <th>Содержание</th>
+                        <th>Дата создания</th>
+                    </tr>
+
+                    @foreach (var message in _messageBLL.GetAllMessagesInTopic(topicID))
+                    {
+                        <tr>
+                            <td>@message.ID</td>
+                            <td>@message.Author</td>
+                            <td>@message.Text</td>
+                            <td>@message.CreationDate.ToString("dd.MM.yyyy")</td>
+                        </tr>
+                    }
+                </table>
+            }
+        }
+
+    }
+
+    <script src="~/js/buttons.js"></script>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

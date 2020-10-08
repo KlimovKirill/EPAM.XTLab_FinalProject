@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.PL;
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Добавление нового сообщения</title>
+</head>
+<body>
+    <div>
+        <form action="~/pages/AddMessage.cshtml" method="post">
+            <label>Текст сообщения:</label>
+            <input type="text" name="text" value="" />
+            <label>Автор:</label>
+            <input type="text" name="author" value="" />
+            <button type="submit">Добавить</button>
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+        @{
+            if (IsPost)
+            {
+
+                string text = Request.Params["text"];
+                string author = Request.Params["author"];
+
+                DateTime cdate = DateTime.Now;
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                var message = new Message();
+
+                message.Text = text;
+                message.Author = author;
+                message.CreationDate = cdate;
+                message.TopicID = Helper.currentTopicID;
+
+                _messageBLL.Add(message);
+            }
+
+        }
+        <script src="~/js/buttons.js"></script>
+        <script src="~/js/HomeButton.js"></script>
+    </div>
+</body>
+</html>

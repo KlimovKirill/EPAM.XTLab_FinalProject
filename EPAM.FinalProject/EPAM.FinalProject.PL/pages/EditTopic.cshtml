@@ -1,0 +1,55 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Редактирование темы</title>
+</head>
+<body>
+    <div>
+        <form action="~/pages/EditTopic.cshtml" method="post">
+            <label>Введите ID темы, которую хотите отредактировать:</label>
+            <input type="number" name="tID" value="" />
+            <label>Новое название:</label>
+            <input type="text" name="name" value="" />
+
+            <button type="submit">Изменить</button>
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+        @{
+            if (IsPost)
+            {
+                int tID = int.Parse(Request.Params["tID"]);
+
+                string name = Request.Params["name"];
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                //var oldMes = _messageBLL.GetMessageById(mID);
+
+                <p>Старое название темы: @_topicBLL.GetTopicById(tID).Name</p>
+
+                var topic = new Topic();
+
+                topic.ID = tID;
+                topic.Name = name;
+
+                _topicBLL.Edit(topic);
+
+                <p>Новое название темы: @name</p>
+            }
+
+        }
+    </div>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

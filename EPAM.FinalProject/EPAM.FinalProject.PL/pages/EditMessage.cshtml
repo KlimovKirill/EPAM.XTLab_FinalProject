@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Редактирование сообщения</title>
+</head>
+<body>
+    <div>
+        <form action="~/pages/EditMessage.cshtml" method="post">
+            <label>Введите ID сообщения, которое хотите отредактировать:</label>
+            <input type="number" name="mID" value="" />
+            <label>Новый текст сообщения:</label>
+            <input type="text" name="text" value="" />
+
+            <button type="submit">Изменить</button>
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+        @{
+            if (IsPost)
+            {
+                int mID = int.Parse(Request.Params["mID"]);
+
+                string text = Request.Params["text"];
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                var oldMes = _messageBLL.GetMessageById(mID);
+
+                <p>Старое сообщение: @_messageBLL.GetMessageById(mID)</p>
+
+                var message = new Message();
+
+                message.ID = mID;
+                message.Text = text;
+                message.Author = oldMes.Author;
+                message.CreationDate = DateTime.Now;
+                message.TopicID = oldMes.TopicID;
+
+                _messageBLL.Edit(message);
+            }
+
+        }
+    </div>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

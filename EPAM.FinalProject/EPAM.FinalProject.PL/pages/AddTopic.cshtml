@@ -1,0 +1,48 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Добавление новой темы</title>
+</head>
+<body>
+    <div>
+        <form action="~/pages/AddTopic.cshtml" method="post">
+            <label>Название темы:</label>
+            <input type="text" name="topicName" value="" />
+
+            <button type="submit">Submit</button>
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+        @{
+            if (IsPost)
+            {
+
+                string name = Request.Params["topicName"];
+                DateTime creationDate = DateTime.Now;
+
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                var topic = new Topic();
+
+                topic.Name = name;
+                topic.CreationDate = creationDate;
+                _topicBLL.Add(topic);
+            }
+
+        }
+    </div>
+    <script src="~/js/buttons.js"></script>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>

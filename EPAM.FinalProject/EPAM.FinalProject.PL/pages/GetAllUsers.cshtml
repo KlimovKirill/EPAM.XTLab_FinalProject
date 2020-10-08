@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Список пользователей</title>
+    <link rel="stylesheet" type="text/css" href="~/styles/indexStyles.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1 style="text-align: center">АвтоФорум</h1>
+        </div>
+
+        <div id="content2">
+            Список пользователей:
+
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Аватар</th>
+                    <th>Имя</th>
+                    <th>Дата рождения</th>
+                    <th>Роль</th>
+                </tr>
+                @{
+
+
+                    var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                    var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                    var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+
+                    foreach (var user in _userBLL.GetAllUsers())
+                    {
+                                <tr>
+                                    <td>@user.ID</td>
+                                    <td><img src=@_userBLL.GetById(user.ID).Icon height="25" width="25" /></td>
+                                    <td>@user.Name</td>
+                                    <td>@user.DateOfBirth.ToString("dd.MM.yyyy")</td>
+                                    <td>@user.Role</td>
+                                </tr>
+                    }
+                }
+
+            </table>
+        </div>
+
+        <div id="footer">Made by xoyolovesneon 2020</div>
+    </div>
+    <script src="~/js/buttons.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+@using EPAM.FinalProject.BLL.Dependencies
+@using EPAM.FinalProject.Entities;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Удаление пользователя</title>
+</head>
+<body>
+    <div>
+        <form action="~/pages/DeleteUser.cshtml" method="post">
+            <label>Введите ID пользователя, которого хотите удалить:</label>
+            <input type="number" name="uID" value="" />
+
+            <button type="submit">Удалить</button>
+            <button type="button" id="homeBtn">Home</button>
+        </form>
+
+        @{
+            if (IsPost)
+            {
+                int uID = int.Parse(Request.Params["uID"]);
+
+                var _userBLL = EPAMFinalProjectBLLDependencies.UserLogic;
+                var _messageBLL = EPAMFinalProjectBLLDependencies.MessageLogic;
+                var _topicBLL = EPAMFinalProjectBLLDependencies.TopicLogic;
+
+                _userBLL.Delete(uID);
+            }
+
+        }
+    </div>
+    <script src="~/js/HomeButton.js"></script>
+</body>
+</html>
